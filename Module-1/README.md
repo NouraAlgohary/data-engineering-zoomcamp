@@ -1,34 +1,43 @@
 # Introduction to Docker
 
--- Discover Docker 
-## ex1
-### After installing docker, we need to validate that it runs properly
+## Discover Docker 
+#### Ex1
+After installing docker, we need to validate that it runs properly
+```
 docker run hello-world
-### hello-world is a pre-installed docker image 
-### This will open Docker Hub, search for the image and download required packages
+```
+- hello-world is a pre-installed docker image
+- This will open Docker Hub, search for the image and download required packages
 
-## ex2
-### Another example is to open ubuntu bash 
+#### Ex2
+Another example is to open ubuntu bash 
+```
 docker run -it ubuntu bash
-### -it is used for interactive mode (like to open bash command that receives commands after the image is runned)
-rm -rf /
-### Deletes everything fom our image container only, but not from other containers 
+```
+- ```-it```: is used for interactive mode (like to open bash command that receives commands after the image is runned)
+- ```rm -rf /```: deletes everything fom our image container only, but not from other containers 
+```
 exit
-### exit the image
+```
+exits the image
 
-## ex3
+#### Ex3
+```
 docker run -it python:3.9
-### This command opens a python image (image:version)
-### It uses python shell, so we can't use bash command to install packages
+```
+- This command opens a python image ```image:version```
+- It uses python shell, so we can't use bash command to install packages
 
+```
 docker run -it entrypoint:bash python:3.9
-### The entrypoint in Docker is like the __main__ function in Python—it defines where the container starts.
-### By setting --entrypoint bash, the container starts with a Bash shell instead of the default Python interpreter.
-### From the Bash shell, you can run python to open the Python shell.
+```
+- The entrypoint in Docker is like the ```__main__``` function in Python, it defines where the container starts.
+- By setting entrypoint bash, the container starts with a Bash shell instead of the default Python interpreter.
+- From the Bash shell, you can run python to open the Python shell.
 python
 
--- Build Docker images
-## ex1
+## Build Docker images
+#### Ex4
 <!-- Now, I want to build my own Docker image with customized configurations. However, using a manual setup is not the best choice for several reasons:
 
 Why Manual Setup is Not Ideal:

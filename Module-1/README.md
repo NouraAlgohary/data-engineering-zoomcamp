@@ -38,9 +38,9 @@ python
 
 ## Build Docker images
 #### Ex4
-<!-- Now, I want to build my own Docker image with customized configurations. However, using a manual setup is not the best choice for several reasons:
+Now, I want to build my own Docker image with customized configurations. However, using a manual setup is not the best choice for several reasons:
 
-Why Manual Setup is Not Ideal:
+**Why Manual Setup is Not Ideal:**
 - Not Reproducible: Manual steps are hard to repeat or document.
 - No Version Control: Changes cannot be tracked or rolled back.
 - Time-Consuming: Requires repeating commands every time.
@@ -50,16 +50,18 @@ Why Manual Setup is Not Ideal:
 - No Scalability: Manual setups don’t scale for multiple containers.
 - No Documentation: No clear record of the environment setup. 
 
-So, I create a Dockerfile using some editor-->
--- Dockerfile
+So, I create a Dockerfile using some editor <br /><br />
+_Dockerfile_
+```
 FROM python:3.9
 
 RUN pip install pandas
 
 ENTRYPOINT ["bash"]
-### FROM: image
-### RUN: runs the command we want when the image starts
-### ENTRYPOINT: declares the entrypoint using a list of arguments
+```
+- ```FROM```: image name
+- ```RUN```: runs the command we want when the image starts
+- ```ENTRYPOINT```: declares the entrypoint using a list of arguments
 
 docker build -t image1:v1 .
 ### build: builds an image from a file called (Dockerfile)

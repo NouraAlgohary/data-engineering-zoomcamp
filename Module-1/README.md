@@ -63,23 +63,30 @@ ENTRYPOINT ["bash"]
 - ```RUN```: runs the command we want when the image starts
 - ```ENTRYPOINT```: declares the entrypoint using a list of arguments
 
+```
 docker build -t image1:v1 .
-### build: builds an image from a file called (Dockerfile)
-### -t: enables to put a tag for the image (image:tag), and we can use a tag as a version for the image
-### . builds an image in the current directory
+```
+- ```build```: builds an image from a file called (_Dockerfile_)
+- ```-t```: enables to put a tag for the image (```image:tag```), and we can use a tag as a version for the image
+- ```.```: builds an image in the current directory
 
+```
 docker run -it image1:v1
-### runs the image we've created earlier
+```
+- runs the image we've created earlier
 
 
--- Build a docker container to run a data pipeline (python script)
-### A Data Pipeline is aseries of processing steps that is used to automate the flow of data.
-### pipeline.py
+## Build a docker container to run a data pipeline (python script)
+A Data Pipeline is a series of processing steps that is used to automate the flow of data.
+_pipeline.py_
+```
 import pandas as pd
 
 print("Pandas installation was successful! Yeah!")
+```
 
-## Dockerfile
+_Dockerfile_
+```
 FROM python:3.9
 
 RUN pip install pandas
@@ -89,11 +96,13 @@ WORKDIR /app
 COPY pipeline.py pipeline.py
 
 ENTRYPOINT ["bash"]
-### WORKDIR: it sets the current directory into the container we build, so we do not need to manually navigate to the script's location
-### COPY: copies the script from local computer to the container we buils making it available to run inside the container
+```
+- ```WORKDIR```: it sets the current directory into the container we build, so we do not need to manually navigate to the script's location
+- ```COPY```: copies the script from local computer to the container we buils making it available to run inside the container
 
--- Passing arguments and Running the script 
-### pipeline.py
+## Passing arguments and Running the script 
+_pipeline.py_
+```
 import sys
 import pandas as pd
 
@@ -104,8 +113,9 @@ print(sys.argv)
 day = sys.argv[1]
 
 print(f"job finished successfully for for day = {day}")
-
-### Dockerfile
+```
+_Dockerfile_
+```
 FROM python:3.9
 
 RUN pip install pandas
@@ -113,12 +123,16 @@ WORKDR /app
 COPY pipeline.py pipeline.py
 
 ENTRYPOINT ["python", "pipeline.py"]
-### Instead of starting a Bash shell (ENTRYPOINT ["bash"]), Arguments List is modified to run python as soon as the container is run
-### ["python", "pipeline.py"]: Specifies the command and its arguments.
-### python: The command to run the Python interpreter.
-### pipeline.py: The script to execute.
+```
+- Instead of starting a Bash shell (```ENTRYPOINT ["bash"]```), Arguments List is modified to run python as soon as the container is run
+- ```["python", "pipeline.py"]```: Specifies the command and its arguments.
+- ```python```: The command to run the Python interpreter.
+- ```pipeline.py```: The script to execute.
 
+```
 docker build -t image3:v1 .
-
+```
+```
 docker build -it image3:v1 22-01-2025
-### the date is our arguement
+```
+- the date is our arguement

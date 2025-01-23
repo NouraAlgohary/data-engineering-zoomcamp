@@ -131,6 +131,13 @@ while i < len(yellow_taxi_data):
 
 print("Insertion is compelete")
 ```
+- Inserts data from yellow_taxi_data (likely a DataFrame) into a SQL table in chunks of 10,000 rows.
+- ```if_exists="append"```: Adds new rows to the existing table without deleting previous data.Why not replace? replace would delete the existing table and recreate it, losing all previous data.
+- Time is recorded before and after each insertion to print how much time it took
+<img width="383" alt="Screenshot 2025-01-23 at 11 13 08 AM" src="https://github.com/user-attachments/assets/c8b04c51-1c95-4b24-b2df-d2cdbe41ae63" />
+
+ <br /> 
+ 
 Check Number of Rows
 ```
 SELECT COUNT(*) FROM yellow_taxi_data

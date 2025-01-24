@@ -1,5 +1,7 @@
 1. Introduction to Docker
 2. Ingesting NY Taxi Data to Postgres
+3. Connecting pgAdmin and Postgres
+   
 # 1. Introduction to Docker
 
 ## Discover Docker 

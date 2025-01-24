@@ -367,6 +367,56 @@ docker run -it \
 
 I had a problem because of the names so I tried multiple things to reach out to these.
 
+## Create a New Server on pgAdmin
+
+After logging into pgAdmin using the credentials you created:  
+- **Email**: `admin@admin.com`  
+- **Password**: `root`  
+
+You can set up a new server to connect to your PostgreSQL database.
+
+### Steps to Create a New Server
+
+1. **Open pgAdmin**:  
+   - Access pgAdmin in your browser at `http://localhost:8083` (or the port you mapped pgAdmin to).  
+
+2. **Add a New Server**:  
+   - In the pgAdmin dashboard, choose **Create Server**
+   <img width="730" alt="Screenshot 2025-01-24 at 10 39 30 AM" src="https://github.com/user-attachments/assets/76ef4fda-21ea-45d3-aab0-dd713e1b76b6" />
+
+
+3. **Fill Out the Server Details**:  
+   - **General Tab**:  
+     - **Name**: Choose a name for your server (e.g., `ny_taxi_server`).  
+   - **Connection Tab**:  
+     - **Hostname/Address**: Use the container name of your PostgreSQL database (`pg-database-new`).  
+     - **Port**: `5432` (default PostgreSQL port).  
+     - **Maintenance Database**: `ny_taxi` (the database you created).  
+     - **Username**: `root` (the PostgreSQL username).  
+     - **Password**: `root` (the PostgreSQL password).
+
+   
+<img width="730" alt="Screenshot 2025-01-24 at 11 13 14 AM" src="https://github.com/user-attachments/assets/9e2aa3d5-c243-47a0-9d99-35b78a7bb683" />
+
+4. **Save the Configuration**:  
+   - Click **Save** to create the server.  
+
+---
+
+### Docker Command Reference
+
+The PostgreSQL container was created using the following command:  
+```bash
+docker run -it \
+    -e POSTGRES_USER="root" \
+    -e POSTGRES_PASSWORD="root" \
+    -e POSTGRES_DB="ny_taxi" \
+    -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+    -p 5432:5432 \
+    --network=pg-network1 \
+    --name=pg-database-new \
+    postgres:13
+
 --------------
 # General Commands I needed
 Remove/Destroy all running and stopped containers

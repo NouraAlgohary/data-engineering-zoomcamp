@@ -294,9 +294,87 @@ LIMIT 10
 ```
 <img width="581" alt="Screenshot 2025-01-23 at 10 38 58 AM" src="https://github.com/user-attachments/assets/3a0c5724-535e-4b2b-b842-0b52cf7742a7" />
 
+-------------
+# 3. Connecting pgAdmin and Postgres
+
+## pgAdmin Container
+pgAdmin: is a free open-source tool for manageing PostgreSQL databases.
+
+We do not need to install pgAdmin as we have Docker and we can install pgAdmin image.
+
+To run pgAdmin container:
+```
+docker run -it \
+  -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+  -e PGADMIN_DEFAULT_PASSWORD="root" \
+  -p 8080:80 \
+  dpage/pgadmin4
+```
+- ```PGADMIN_DEFAULT_EMAIL``` and ```PGADMIN_DEFAULT_PASSWORD``` are the environment variable that we use to log in.
+- We map port ```8080``` port at our host machine to port ```80```. All instructions that are sent to port ```8080``` will be forwarded to port ```80``` on the container.
+
+To open pgAdmin we use the URL
+```
+localhost:8080
+```
+We can't communicate with the postgres database we created, as they are two isolated containers. We need to connect both containers using Docker Network
+
+## Docker Network Create
+```
+docker network create pg-network1
+```
+- ```docker network create``` is the command needed to create a network followed by its name.
+
+## Add Postgres to Docker Network
+```
+docker run -it \
+    -e POSTGRES_USER="root" \
+    -e POSTGRES_PASSWORD="root" \
+    -e POSTGRES_DB="ny_taxi" \
+    -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+    -p 5432:5432 \
+    --network=pg-network1 \
+    --name=pg-database-new \
+    postgres:13
+```
+- ```--network```: network name (the one we created)
+- ```--name```: Postgres container name that will be used to find it by other containers.
+
+To make sure the data sill there
+```
+pgcli -h localhost -p 5432 -u root -d ny_taxi
+```
+```
+SELECT COUNT(1) FROM yellow_taxi_data
+```
+## Add pgAdmin to Docker Network
+Now, we will run pgAdmin in the same network
+```
+docker run -it \
+  -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+  -e PGADMIN_DEFAULT_PASSWORD="root" \
+  -p 8085:80 \
+  --network=pg-network1 \
+  --name=pgadmin_5 \
+  --memory="1g" \
+  dpage/pgadmin4
+```
+- ```--network```: network name (the one we created)
+- ```name```: pgAdmin container name.
+- ```memory```: Determines how much memory to be used 
+
+I had a problem because of the names so I tried multiple things to reach out to these.
+
 --------------
+# General Commands I needed
 Remove/Destroy all running and stopped containers
 ```
 docker rm -f $(docker ps -aq) 
 ```
+
+To find out information about some container like network name.
+```
+docker inspect {conainer_name}
+```
+
 

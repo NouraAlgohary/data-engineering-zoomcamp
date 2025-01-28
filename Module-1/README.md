@@ -1,6 +1,7 @@
 1. Introduction to Docker
 2. Ingesting NY Taxi Data to Postgres
 3. Connecting pgAdmin and Postgres
+4. Dockerizing the Ingestion Script
    
 # 1. Introduction to Docker
 
@@ -416,6 +417,17 @@ docker run -it \
     --network=pg-network1 \
     --name=pg-database-new \
     postgres:13
+```
+--------------
+# 4. Dockerizing the Ingestion Script
+Currently, we manually run a Python notebook to download data and ingest it into a PostgreSQL database. To simplify this process and prepare for automation, we converted the notebook into a Python script and added it to our Dockerfile. This step lays the foundation for integrating the ingestion process into an automated pipeline in the future, making the workflow more efficient and easier to manage.
+
+To convert a jupyter notebook to a Script
+```
+jupyter nbconvert --to=script ingesting_yellow_taxi_data.ipynb
+```
+- ```--to```: specifies the format we want to convert it to.
+- ```ingesting_yellow_taxi_data.ipynb```: name of the new file.
 
 --------------
 # General Commands I needed

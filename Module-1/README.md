@@ -433,6 +433,9 @@ jupyter nbconvert --to=script ingesting_yellow_taxi_data.ipynb
 #### 2. Refactor the Script 
 Then, We encapsulated the core logic of the script within the main(params) function and added the if __name__ == '__main__': block to enable the script to accept command-line arguments. This structure allows the script to be executed directly with customizable parameters, making it more flexible and easier to integrate into automated workflows or pipelines.
 
+<img width="646" alt="Screenshot 2025-01-28 at 11 25 23 AM" src="https://github.com/user-attachments/assets/42d5ac8e-98a6-4e1e-8f10-643629c1a9e2" />
+
+
 -```main(params)```: This function contains the core logic of the script. It takes a params object (created by argparse) and uses its attributes (like user, password, host, etc.) to perform the data ingestion. This keeps the logic clean and focused.
 -```if __name__ == '__main__':```: This block ensures that the script only runs when executed directly (not when imported as a module). It uses argparse to parse command-line arguments, creates a params object, and passes it to ```main(params)```.
 
@@ -468,6 +471,29 @@ ENTRYPOINT ["python", "ingestion_script.py"]
 - ```psycopg2``` and ```psycopg2-binary```: For connecting to PostgreSQL databases.
 - ```pyarrow```: For handling Parquet file formats.
 - ```COPY```: Copies the ingestion_script.py file from our local machine into the /app directory inside the container.
+
+#### Build and Run the container
+```
+docker build -t taxi_ingest:v1 .
+```
+```
+docker run -it \
+  --network=pg-network1 \
+  taxi_ingest:v1 \
+  --user=root \
+  --password=root \
+  --host=pg-database-new \
+  --port=5432 \
+  --db=ny_taxi \
+  --table_name=yellow_taxi_trips \
+  --url=https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet
+```
+- ```--network=pg-network1```: Connects the container to the Docker network ```pg-network1```, enabling communication with the PostgreSQL database.
+- ```taxi_ingest:v1```: Specifies the Docker image to use for running the container.
+- **Script Parameters**:
+   - ```--user, --password, --host, --port, --db```: Database connection details.
+   - ```--table_name```: The name of the table where the data will be ingested.
+   - ```--url```: The URL of the dataset to download and process.
   
 #### Summary
 This `Dockerfile` sets up a container with Python 3.9, installs necessary tools and libraries, and configures it to run the `ingestion_script.py` script automatically. It ensures the script has everything it needs to download data, process it, and ingest it into a PostgreSQL database. This makes the script portable, reproducible, and ready for automation.

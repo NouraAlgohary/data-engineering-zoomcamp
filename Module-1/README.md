@@ -499,6 +499,40 @@ docker run -it \
 This `Dockerfile` sets up a container with Python 3.9, installs necessary tools and libraries, and configures it to run the `ingestion_script.py` script automatically. It ensures the script has everything it needs to download data, process it, and ingest it into a PostgreSQL database. This makes the script portable, reproducible, and ready for automation.
 
 --------------
+# 5. Running Docker Compose
+
+When we needed to set up a Postgres database and pgAdmin interface, we initially ran separate Docker containers for each, connected them to the same network, and configured them manually. This involved multiple Docker commands and a lot of time spent on setup.  
+
+Instead of juggling multiple commands and configurations, Docker Compose lets you define all your services, networks, and configurations in a single YAML file. Now, running Postgres and pgAdmin together is as simple as writing a few lines of code and executing one command. It’s faster, cleaner, and far more efficient. Docker Compose has become our go-to tool for managing multi-container setups.
+
+However, while Docker Compose comes pre-installed with Docker Desktop on Mac and Windows, Linux users need to install it separately. You can check if Docker Compose is installed by running the command:
+```
+docker-compose  
+```
+
+_docker-compose.yaml_
+```
+services:
+  pgdatabase:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=ny_taxi
+    volumes:
+      - "./ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - "8085:80"
+```
+--------------
 # General Commands I needed
 Remove/Destroy all running and stopped containers
 ```

@@ -450,6 +450,27 @@ python3 ingestion_script.py \
 ```
 ### Dockerize the Script
 
+_Dockerfile_
+```
+FROM python:3.9
+
+RUN apt-get install wget
+RUN pip install pandas sqlalchemy psycopg2 pyarrow psycopg2-binary
+
+WORKDIR /app
+COPY ingestion_script.py ingestion_script.py 
+
+ENTRYPOINT ["python", "ingestion_script.py"]
+```
+- ```RUN apt-get install wget```: This command installs wget, a command-line tool used to download files from the internet.
+- ```pandas```: For data manipulation and analysis.
+- ```sqlalchemy```: For interacting with databases.
+- ```psycopg2``` and ```psycopg2-binary```: For connecting to PostgreSQL databases.
+- ```pyarrow```: For handling Parquet file formats.
+- ```COPY```: Copies the ingestion_script.py file from our local machine into the /app directory inside the container.
+  
+#### Summary
+This `Dockerfile` sets up a container with Python 3.9, installs necessary tools and libraries, and configures it to run the `ingestion_script.py` script automatically. It ensures the script has everything it needs to download data, process it, and ingest it into a PostgreSQL database. This makes the script portable, reproducible, and ready for automation.
 
 --------------
 # General Commands I needed

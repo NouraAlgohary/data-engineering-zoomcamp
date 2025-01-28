@@ -436,6 +436,20 @@ Then, We encapsulated the core logic of the script within the main(params) funct
 -```main(params)```: This function contains the core logic of the script. It takes a params object (created by argparse) and uses its attributes (like user, password, host, etc.) to perform the data ingestion. This keeps the logic clean and focused.
 -```if __name__ == '__main__':```: This block ensures that the script only runs when executed directly (not when imported as a module). It uses argparse to parse command-line arguments, creates a params object, and passes it to ```main(params)```.
 
+#### 3. Testing
+We can drop the table we have in the database and recreate it using this script.
+```
+python3 ingestion_script.py \                                                      
+  --user=root \
+  --password=root \
+  --host=localhost \
+  --port=5432 \
+  --db=ny_taxi \
+  --table_name=yellow_taxi_trips \
+  --url=https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet
+```
+### Dockerize the Script
+
 
 --------------
 # General Commands I needed

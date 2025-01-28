@@ -422,12 +422,20 @@ docker run -it \
 # 4. Dockerizing the Ingestion Script
 Currently, we manually run a Python notebook to download data and ingest it into a PostgreSQL database. To simplify this process and prepare for automation, we converted the notebook into a Python script and added it to our Dockerfile. This step lays the foundation for integrating the ingestion process into an automated pipeline in the future, making the workflow more efficient and easier to manage.
 
-To convert a jupyter notebook to a Script
+### Structuring the Script
+#### 1. Turn the notebook into a Script
 ```
 jupyter nbconvert --to=script ingesting_yellow_taxi_data.ipynb
 ```
 - ```--to```: specifies the format we want to convert it to.
 - ```ingesting_yellow_taxi_data.ipynb```: name of the new file.
+
+#### 2. Refactor the Script 
+Then, We encapsulated the core logic of the script within the main(params) function and added the if __name__ == '__main__': block to enable the script to accept command-line arguments. This structure allows the script to be executed directly with customizable parameters, making it more flexible and easier to integrate into automated workflows or pipelines.
+
+-```main(params)```: This function contains the core logic of the script. It takes a params object (created by argparse) and uses its attributes (like user, password, host, etc.) to perform the data ingestion. This keeps the logic clean and focused.
+-```if __name__ == '__main__':```: This block ensures that the script only runs when executed directly (not when imported as a module). It uses argparse to parse command-line arguments, creates a params object, and passes it to ```main(params)```.
+
 
 --------------
 # General Commands I needed

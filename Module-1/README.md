@@ -505,6 +505,11 @@ Remove/Destroy all running and stopped containers
 docker rm -f $(docker ps -aq) 
 ```
 
+Force Stop All Running Containers
+```
+docker kill $(docker ps -q)
+```
+
 To find out information about some container like network name.
 ```
 docker inspect {conainer_name}

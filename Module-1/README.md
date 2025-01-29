@@ -548,5 +548,8 @@ To find out information about some container like network name.
 ```
 docker inspect {conainer_name}
 ```
-
+Start docker-compose Services
+```
+docker-compose up -d
+```
 

@@ -1,5 +1,4 @@
-project/
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-├── ingestion_script.py
+project <br/>
+├── Dockerfile<br/>
+├── docker-compose.yml<br/>
+├── ingestion_script.py<br/>

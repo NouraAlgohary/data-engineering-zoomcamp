@@ -1,9 +1,11 @@
-1. Introduction to Docker
-2. Ingesting NY Taxi Data to Postgres
-3. Connecting pgAdmin and Postgres
-4. Dockerizing the Ingestion Script
+1. [Introduction to Docker](#introduction-to-docker)
+2. [Ingesting NY Taxi Data to Postgres](#ingesting-ny-taxi-data-to-postgres)
+3. [Connecting pgAdmin and Postgres](#connecting-pgadmin-and-postgres)
+4. [Dockerizing the Ingestion Script](#dockerizing-the-ingestion-script)
+5. [Running Docker Compose](#running-docker-compose)
+6. [General Commands I needed](#general-commands-i-needed)
    
-# 1. Introduction to Docker
+# Introduction to Docker
 
 ## Discover Docker 
 #### Ex1
@@ -142,7 +144,7 @@ docker build -it image3:v1 22-01-2025
 ```
 - the date is our arguement
  ----------------------------------
- # 2. Ingesting NY Taxi Data to Postgres
+# Ingesting NY Taxi Data to Postgres
 - Data ingestion: is the process of collecting, importing, and transferring data from various sources into a system (like a database) for storage, processing, or analysis.
 - Required: jupyter, pgcli, SQLAlchemy
 
@@ -298,7 +300,7 @@ LIMIT 10
 <img width="581" alt="Screenshot 2025-01-23 at 10 38 58 AM" src="https://github.com/user-attachments/assets/3a0c5724-535e-4b2b-b842-0b52cf7742a7" />
 
 -------------
-# 3. Connecting pgAdmin and Postgres
+# Connecting pgAdmin and Postgres
 
 ## pgAdmin Container
 pgAdmin: is a free open-source tool for manageing PostgreSQL databases.
@@ -419,7 +421,7 @@ docker run -it \
     postgres:13
 ```
 --------------
-# 4. Dockerizing the Ingestion Script
+# Dockerizing the Ingestion Script
 Currently, we manually run a Python notebook to download data and ingest it into a PostgreSQL database. To simplify this process and prepare for automation, we converted the notebook into a Python script and added it to our Dockerfile. This step lays the foundation for integrating the ingestion process into an automated pipeline in the future, making the workflow more efficient and easier to manage.
 
 ### Structuring the Script
@@ -499,7 +501,7 @@ docker run -it \
 This `Dockerfile` sets up a container with Python 3.9, installs necessary tools and libraries, and configures it to run the `ingestion_script.py` script automatically. It ensures the script has everything it needs to download data, process it, and ingest it into a PostgreSQL database. This makes the script portable, reproducible, and ready for automation.
 
 --------------
-# 5. Running Docker Compose
+# Running Docker Compose
 
 When we needed to set up a Postgres database and pgAdmin interface, we initially ran separate Docker containers for each, connected them to the same network, and configured them manually. This involved multiple Docker commands and a lot of time spent on setup.  
 

@@ -1,7 +1,23 @@
+# Automated Data Pipeline with Docker, Python, and PostgreSQL
+
+Designed and implemented a robust data pipeline to automate the ingestion, transformation, and analysis of data from multiple sources. The project involved:
+
+- Creating a Dockerfile and docker-compose.yml to containerize the environment, including PostgreSQL for database management and pgAdmin for database administration.
+- Developing a Python script to download data from the web, process it, and load it into a PostgreSQL database.
+- Handling diverse data sources, including a compressed CSV file (csv.gz) for taxi trip data and a standard CSV file for zone data, by generalizing the script to accept and transform different data formats.
+- Writing SQL queries to analyze the data and extract meaningful insights.
+
 project <br/>
 ├── Dockerfile<br/>
 ├── docker-compose.yml<br/>
 ├── ingestion_script.py<br/>
+
+
+Key Achievements:
+
+- Set up and connected pgAdmin, PostgreSQL, and data sources using Docker.
+- Built a flexible and scalable script to handle data transformation and loading.
+- Solved complex problems to ensure the data pipeline worked smoothly.
 
 -------------
 **Question 3. Trip Segmentation Count**

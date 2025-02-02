@@ -55,6 +55,23 @@ Change Directory to ```02-workflow-orchestration```
 ```
 cd 02-workflow-orchestration/
 ```
+File Structure
+
+The project is organized as follows:
+```
+.
+├── flows/
+│   ├── 01_getting_started_data_pipeline.yaml
+│   ├── 02_postgres_taxi.yaml
+│   ├── 02_postgres_taxi_scheduled.yaml
+│   ├── 03_postgres_dbt.yaml
+│   ├── 04_gcp_kv.yaml
+│   ├── 05_gcp_setup.yaml
+│   ├── 06_gcp_taxi.yaml
+│   ├── 06_gcp_taxi_scheduled.yaml
+│   └── 07_gcp_dbt.yaml
+```
+
 2. Set Up Kestra with Docker Compose
 Start the Docker containers for Kestra and PostgreSQL:
 ```

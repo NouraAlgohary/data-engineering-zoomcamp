@@ -45,6 +45,8 @@ Prerequisites:
 - **Docker** and **Docker Compose** installed on your machine.
 - Basic understanding of **ETL**, **PostgreSQL**, and **Kestra**.
 
+Steps:
+1. Clone the project
 Clone the repo
 ```
 git clone https://github.com/DataTalksClub/data-engineering-zoomcamp.git
@@ -53,6 +55,7 @@ Change Directory to ```02-workflow-orchestration```
 ```
 cd 02-workflow-orchestration/
 ```
+2. Set Up Kestra with Docker Compose
 Start the Docker containers for Kestra and PostgreSQL:
 ```
 docker compose up -d
@@ -65,6 +68,23 @@ This will:
 
 Access the Kestra UI at __http://localhost:8080__.
 
+3. Set Up Kestra with Docker Compose
 
+To import flows, run the following commands on bash:
+```
+curl -X POST http://localhost:8080/api/v1/flows/import -F fileUpload=@flows/01_getting_started_data_pipeline.yaml
+curl -X POST http://localhost:8080/api/v1/flows/import -F fileUpload=@flows/02_postgres_taxi.yaml
+curl -X POST http://localhost:8080/api/v1/flows/import -F fileUpload=@flows/02_postgres_taxi_scheduled.yaml
+curl -X POST http://localhost:8080/api/v1/flows/import -F fileUpload=@flows/03_postgres_dbt.yaml
+curl -X POST http://localhost:8080/api/v1/flows/import -F fileUpload=@flows/04_gcp_kv.yaml
+curl -X POST http://localhost:8080/api/v1/flows/import -F fileUpload=@flows/05_gcp_setup.yaml
+curl -X POST http://localhost:8080/api/v1/flows/import -F fileUpload=@flows/06_gcp_taxi.yaml
+curl -X POST http://localhost:8080/api/v1/flows/import -F fileUpload=@flows/06_gcp_taxi_scheduled.yaml
+curl -X POST http://localhost:8080/api/v1/flows/import -F fileUpload=@flows/07_gcp_dbt.yaml
+```
+
+
+
+<img width="1377" alt="Screenshot 2025-02-02 at 11 34 09 AM" src="https://github.com/user-attachments/assets/34c93a69-7d4e-4525-b254-39142f44a5b2" />
 
 

@@ -107,3 +107,60 @@ curl -X POST http://localhost:8080/api/v1/flows/import -F fileUpload=@flows/07_g
 ------------
 
 ## ETL Pipelines in Kestra: Detailed Walkthrough
+
+Start Kestra container on Docker using a single command
+```
+docker run --pull=always --rm -it -p 8080:8080 --user=root -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp kestra/kestra:latest server local
+```
+```
+id: myflow
+namespace: company.team
+
+inputs:
+  - id: taxi
+    type: SELECT
+    displayName: Select taxi type
+    values: ["yellow", "green"]
+    defaults: "yellow"
+
+  - id: year
+    type: SELECT
+    displayName: Select year
+    values: ['2019', '2020']
+    defaults: '2019'
+
+  - id: month
+    type: SELECT
+    displayName: Select month
+    values: ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
+    defaults: "01"
+
+variables:
+  file: "{{ inputs.taxi }}_tripdata_{{ inputs.year }}-{{ inputs.month }}.csv"
+  stagingTable: "public.{{ inputs.taxi }}_tripdata_staging"
+  table: "public.{{ inputs.taxi }}_tripdata"
+  data: "{{ outputs.extract.outputFiles[inputs.taxi ~ '_trip_data_' ~ inputs.year ~ '-' ~ inputs.month ~ '.csv'] }}"
+
+tasks:
+  - id: set_label
+    type: io.kestra.plugin.core.execution.Labels
+    labels:
+      file: "{{ vars.file }}"
+      taxi: "{{ inputs.taxi }}"
+
+  - id: debug
+    type: io.kestra.plugin.core.debug.Return
+    format: |
+      File: {{ vars.file }}
+      URL: https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{{ inputs.taxi }}/{{ vars.file }}.gz
+      Command: wget -qO- https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{{ inputs.taxi }}/{{ vars.file }}.gz | gunzip > {{ render(vars.file) }}
+
+  - id: extract
+    type: io.kestra.plugin.scripts.shell.Commands
+    outputFiles: 
+      - "*.csv"
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    commands:
+      - wget -qO- https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{{ inputs.taxi }}/{{ vars.file }}.gz | gunzip > {{ render(vars.file) }}
+```

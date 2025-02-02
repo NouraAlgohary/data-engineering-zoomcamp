@@ -104,4 +104,6 @@ curl -X POST http://localhost:8080/api/v1/flows/import -F fileUpload=@flows/07_g
 
 <img width="1377" alt="Screenshot 2025-02-02 at 11 34 09 AM" src="https://github.com/user-attachments/assets/34c93a69-7d4e-4525-b254-39142f44a5b2" />
 
+------------
 
+## ETL Pipelines in Kestra: Detailed Walkthrough

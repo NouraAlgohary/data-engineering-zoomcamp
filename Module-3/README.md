@@ -3,7 +3,7 @@
 ## Index:
 - [OLTP vs OLAP](#oltp-vs-olap)
 - [What is Data Warehouse](#what-is-data-warehouse)
-- [BigQuery](#big-query)
+- [BigQuery](#bigquery)
 
 ## OLTP vs OLAP
 OLTP and OLAP are two different types of **Database System Design**, each optimized for specific purposes and use cases.
@@ -32,5 +32,5 @@ A **Data Warehouse (DWH)** is an **OLAP** solution used for **reporting and data
 <img width="483" alt="Screenshot 2025-02-08 at 2 59 02 PM" src="https://github.com/user-attachments/assets/ab0f4f68-cb61-4699-baf6-593cde1f7ad6" />
 
 
-## Big Query
-
+## BigQuery
+BigQuery is a data warehouse solution, however it's serverless, there is no software to manage or a database to install. 
